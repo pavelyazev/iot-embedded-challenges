@@ -5,16 +5,14 @@
 
 
 
-
 int main(void)
 {
     platformInit();
     controllerInit();
 
     // Start FreeRTOS scheduler
-    osKernelStart (NULL, NULL);
+    osKernelStart(NULL, NULL);
 
     return 0;
 }
-
 
