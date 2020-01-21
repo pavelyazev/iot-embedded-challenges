@@ -1,4 +1,6 @@
+#include "cmsis_os.h"
 #include "platform.h"
+#include "controller.h"
 
 
 
@@ -6,9 +8,11 @@
 
 int main(void)
 {
-    platform_init();
+    platformInit();
+    controllerInit();
 
-    while(1);
+    // Start FreeRTOS scheduler
+    osKernelStart (NULL, NULL);
 
     return 0;
 }

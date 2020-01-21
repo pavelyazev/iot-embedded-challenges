@@ -1,7 +1,7 @@
+set(CMAKE_TOOLCHAIN_FILE stm32.cmake)
+
 cmake_minimum_required(VERSION 2.8.9)
 project(thermostat)
-
-set(CMAKE_TOOLCHAIN_FILE stm32.cmake)
 
 set(LIBOPENCM3_PATH "libopencm3")
 
@@ -15,6 +15,7 @@ set(PROJECT_LINK_LIBS libopencm3_stm32f4.a)
 
 include_directories(src
                     src/platform
+                    src/controller
                     src/cmsis-rtos
                     FreeRTOS/Source/include
 		    FreeRTOS/Source/portable/GCC/ARM_CM4F/)
@@ -22,6 +23,7 @@ include_directories(src
 
 file(GLOB sources src/*.c
                   src/platform/*.c
+                  src/controller/*.c
                   src/cmsis-rtos/*.c
                   FreeRTOS/Source/portable/GCC/ARM_CM4F/*.c
                   FreeRTOS/Source/portable/MemMang/heap_3.c
