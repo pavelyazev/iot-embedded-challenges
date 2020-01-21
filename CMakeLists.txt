@@ -16,6 +16,7 @@ set(PROJECT_LINK_LIBS libopencm3_stm32f4.a)
 include_directories(src
                     src/platform
                     src/controller
+                    src/sensor
                     src/cmsis-rtos
                     FreeRTOS/Source/include
 		    FreeRTOS/Source/portable/GCC/ARM_CM4F/)
@@ -24,6 +25,7 @@ include_directories(src
 file(GLOB sources src/*.c
                   src/platform/*.c
                   src/controller/*.c
+                  src/sensor/*.c
                   src/cmsis-rtos/*.c
                   FreeRTOS/Source/portable/GCC/ARM_CM4F/*.c
                   FreeRTOS/Source/portable/MemMang/heap_3.c
