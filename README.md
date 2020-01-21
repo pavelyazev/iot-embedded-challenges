@@ -10,3 +10,16 @@ Finally only header files and the library for linking were added into project tr
 
 The target MCU is STM32F4XX.
 
+CMSIS-RTOS abstraction layer is used just to make code more visual.
+But it is not the best option because its API is limited.
+
+
+
+To build project:
+
+Update stm32.cmake file with proper path to toolchane
+
+mkdir build
+cd build
+cmake -G "Unix Makefiles" ..
+make
