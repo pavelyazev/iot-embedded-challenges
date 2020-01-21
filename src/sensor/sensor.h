@@ -2,8 +2,8 @@
 #define _SENSOR_H
 
 
-#define SENSOR_STATUS_OK     (0)
-#define SENSOR_STATUS_ERR   (-1)
+#define SENSOR_STATUS_OK      0
+#define SENSOR_STATUS_ERR    -1
 
 /** 
 *    @brief  Sensor initialization

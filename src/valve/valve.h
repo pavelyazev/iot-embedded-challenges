@@ -1,8 +1,11 @@
 #ifndef _VALVE_H
 #define _VALVE_H
 
-#define VALVE_STATUS_OK     (0)
-#define VALVE_STATUS_ERR   (-1)
+#define VALVE_STATUS_OK      0
+#define VALVE_STATUS_ERR    -1
+
+#define VALVE_OPEN_VAL       1
+#define VALVE_CLOSE_VAL      0
 
 /** 
 *    @brief  Valve initialization

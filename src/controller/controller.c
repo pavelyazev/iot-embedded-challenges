@@ -4,12 +4,12 @@
 #include "sensor.h"
 #include "valve.h"
 
-#define CONTROLLER_THREAD_STACK_SIZE (200)
-#define CONTROLLER_MESSAGE_QUEUE_LEN  (4)
-#define TIMER_PERIOD_MS              (1000)
-#define MAX_TEMP_CELSIUS_DEGREE       (30) 
-#define MIN_TEMP_CELSIUS_DEGREE       (20)    
-#define VALVE_INITIAL_STATE           (0)
+#define CONTROLLER_THREAD_STACK_SIZE  200
+#define CONTROLLER_MESSAGE_QUEUE_LEN   4
+#define TIMER_PERIOD_MS               1000
+#define MAX_TEMP_CELSIUS_DEGREE        30 
+#define MIN_TEMP_CELSIUS_DEGREE        20    
+#define VALVE_INITIAL_STATE            0
 
 
 static void controllerThread(void const * arg);
@@ -106,16 +106,31 @@ static void controllerUpdateMaxTemp(uint16_t temp)
     maxTemp = temp;
 }
 
+/*
+*   Dummy temperature converter. Provides actual temperature from raw sensor
+*   measurement. 
+*/
+static int16_t tempCovertFromRaw(int16_t rawTemp)
+{    
+    return rawTemp;
+}
 
+/*
+*   Here it is situated all logic to control a valve according
+*   to the current temperature. In principle PID maybe used or other approaches.
+*/
 static void controllerUpdateValve(uint16_t rawTemp)
-{
-    /*
-    *  Here it is situated all logic to control a valve according
-    *  to the current temperature. In principle PID maybe used or other approaches.
-    */
-    uint16_t newValveState = 0;
+{    
+    // Relay control
+    uint16_t newValveVal;
+    int16_t curTemp = tempCovertFromRaw(rawTemp);
 
-    int32_t res = valveSetup(newValveState);
+    if(curTemp > maxTemp)
+        newValveVal = VALVE_CLOSE_VAL;
+    else if(curTemp < minTemp)
+        newValveVal = VALVE_OPEN_VAL;
+    
+    int32_t res = valveSetup(newValveVal);
     if(res == SENSOR_STATUS_OK)
     {
         // Do something
@@ -168,7 +183,7 @@ static void controllerThread(void const * arg)
     }
 }
 
-void timerCallbackFunction(void const *arg)
+static void timerCallbackFunction(void const *arg)
 {
     controllerSendMsg(_POLL_TEMP_SENSOR_, 0);
 }
