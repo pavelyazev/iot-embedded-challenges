@@ -14,11 +14,13 @@ set(PROJECT_LINK_LIBS libopencm3_stm32f4.a)
 
 
 include_directories(src
+                    src/cmsis-rtos
                     FreeRTOS/Source/include
 		    FreeRTOS/Source/portable/GCC/ARM_CM4F/)
 
 
 file(GLOB sources src/*.c
+                  src/cmsis-rtos/*.c
                   FreeRTOS/Source/portable/GCC/ARM_CM4F/*.c
                   FreeRTOS/Source/portable/MemMang/heap_3.c
                   FreeRTOS/Source/*.c)
