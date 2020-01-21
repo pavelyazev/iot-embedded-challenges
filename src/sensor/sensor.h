@@ -12,7 +12,7 @@
 int32_t sensorInit(void);
 
 /** 
-*    @brief  Readin raw value from temperature sensor
+*    @brief  Read raw value from temperature sensor
 *    @param  Pointer to save read value
 *    @retval Status code
 */

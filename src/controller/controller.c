@@ -2,12 +2,14 @@
 #include "cmsis_os.h"
 #include "controller.h"
 #include "sensor.h"
+#include "valve.h"
 
 #define CONTROLLER_THREAD_STACK_SIZE (200)
 #define CONTROLLER_MESSAGE_QUEUE_LEN  (4)
 #define TIMER_PERIOD_MS              (1000)
 #define MAX_TEMP_CELSIUS_DEGREE       (30) 
 #define MIN_TEMP_CELSIUS_DEGREE       (20)    
+#define VALVE_INITIAL_STATE           (0)
 
 
 static void controllerThread(void const * arg);
@@ -63,6 +65,22 @@ static void controllerTempPollingPrepare(void)
     }
 }
 
+static void controllerValvePrepare(void)
+{
+    // Initialize temperature sensor and start polling if 
+    // everything is Ok with the sensor
+    uint32_t res = valveInit();
+    if(res == SENSOR_STATUS_OK)
+    {
+        res = valveSetup(VALVE_INITIAL_STATE); 
+        // Check res here       
+    }
+    else
+    {
+        // Report error or do some action       
+    }
+}
+
 static void controllerGetTemp(void)
 {
     uint16_t rawTemp;
@@ -74,7 +92,7 @@ static void controllerGetTemp(void)
     }
     else
     {
-        // Report error
+        // Report error or do some action       
     }    
 }
 
@@ -93,9 +111,19 @@ static void controllerUpdateValve(uint16_t rawTemp)
 {
     /*
     *  Here it is situated all logic to control a valve according
-    *  to the current temperature
+    *  to the current temperature. In principle PID maybe used or other approaches.
     */
+    uint16_t newValveState = 0;
 
+    int32_t res = valveSetup(newValveState);
+    if(res == SENSOR_STATUS_OK)
+    {
+        // Do something
+    }
+    else
+    {
+       // Report error or do some action        
+    }
 }
 
 /*
@@ -127,6 +155,7 @@ static void controllerHandleMsg(CtrlMsg_t msg)
 static void controllerThread(void const * arg)
 {    
     controllerTempPollingPrepare();
+    controllerValvePrepare();    
 
     while(1)
     {

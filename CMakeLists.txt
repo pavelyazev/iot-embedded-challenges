@@ -17,6 +17,7 @@ include_directories(src
                     src/platform
                     src/controller
                     src/sensor
+                    src/valve
                     src/cmsis-rtos
                     FreeRTOS/Source/include
 		    FreeRTOS/Source/portable/GCC/ARM_CM4F/)
@@ -26,6 +27,7 @@ file(GLOB sources src/*.c
                   src/platform/*.c
                   src/controller/*.c
                   src/sensor/*.c
+                  src/valve/*.c
                   src/cmsis-rtos/*.c
                   FreeRTOS/Source/portable/GCC/ARM_CM4F/*.c
                   FreeRTOS/Source/portable/MemMang/heap_3.c
