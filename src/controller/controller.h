@@ -6,26 +6,10 @@ typedef enum
     _POLL_TEMP_SENSOR_,
     _UPDATE_VALVE_,
     _UPDATE_MIN_TEMP_,
-    _UPDATE_MAX_TEMP_,
-    
-} MsgID_t;
-
-/** 
-*    @brief Definition control message structure 
-*    
-*/
-typedef struct 
-{
-    uint16_t id;
-    uint16_t arg;  
-} CtrlMsg_t;
+    _UPDATE_MAX_TEMP_,    
+} CtrlMsgID_t;
 
 
-typedef union
-{
-    CtrlMsg_t msg;
-    uint32_t info;
-} MsgQItem_t;
 
 /** 
 *    @brief Controller intitialization
@@ -37,6 +21,6 @@ void controllerInit(void);
 *    @param id   Message ID
 *    @param arg  Optional argument
 */
-void controllerSendMsg(MsgID_t id, uint16_t arg);
+void controllerSendMsg(CtrlMsgID_t id, uint16_t arg);
 
 #endif

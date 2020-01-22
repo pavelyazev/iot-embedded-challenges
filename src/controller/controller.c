@@ -12,9 +12,34 @@
 #define VALVE_INITIAL_STATE            0
 
 
+/** 
+*    @brief Definition control message structure 
+*    
+*/
+typedef struct 
+{
+    uint16_t id;
+    uint16_t arg;  
+} CtrlMsg_t;
+
+
+typedef union
+{
+    CtrlMsg_t msg;
+    uint32_t info;
+} CtrlMsgQItem_t;
+
+
+/*
+*    Function prototypes
+*/
 static void controllerThread(void const * arg);
 static void timerCallbackFunction(void const *arg);
 
+
+/*
+*    Static variables 
+*/
 static osMessageQId ctrlMsgQ;
 static osTimerId    timerID;
 
@@ -29,7 +54,7 @@ void controllerInit(void)
     osThreadCreate(osThread(ctrl_thread), NULL);
 
     // Controller Message Queue creation
-    osMessageQDef(ctrl_msgq, CONTROLLER_MESSAGE_QUEUE_LEN, MsgQItem_t);
+    osMessageQDef(ctrl_msgq, CONTROLLER_MESSAGE_QUEUE_LEN, CtrlMsgQItem_t);
     ctrlMsgQ = osMessageCreate(osMessageQ(ctrl_msgq), NULL);
 
     osTimerDef(timer, timerCallbackFunction);
@@ -37,13 +62,13 @@ void controllerInit(void)
 }
 
 
-void controllerSendMsg(MsgID_t id, uint16_t arg)
+void controllerSendMsg(CtrlMsgID_t id, uint16_t arg)
 {
     /*
     *  Current cmsis-rtos API can send only uint32 words
     *  So we pack a message into word
     */
-    MsgQItem_t msgItem;
+    CtrlMsgQItem_t msgItem;
     msgItem.msg.id  = id;
     msgItem.msg.arg = arg;
 	osMessagePut(ctrlMsgQ, msgItem.info, 0);
@@ -178,7 +203,7 @@ static void controllerThread(void const * arg)
        	if(msg.status != osEventMessage)
 		    continue;
 
-        MsgQItem_t msgItem = {.info = msg.value.v};
+        CtrlMsgQItem_t msgItem = {.info = msg.value.v};
         controllerHandleMsg(msgItem.msg);
     }
 }
