@@ -16,6 +16,7 @@ set(PROJECT_LINK_LIBS libopencm3_stm32f4.a)
 include_directories(src
                     src/platform
                     src/controller
+                    src/ci
                     src/sensor
                     src/valve
                     src/cmsis-rtos
@@ -26,6 +27,7 @@ include_directories(src
 file(GLOB sources src/*.c
                   src/platform/*.c
                   src/controller/*.c
+                  src/ci/*.c
                   src/sensor/*.c
                   src/valve/*.c
                   src/cmsis-rtos/*.c

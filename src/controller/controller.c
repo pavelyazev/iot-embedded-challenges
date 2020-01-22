@@ -1,6 +1,7 @@
 
 #include "cmsis_os.h"
 #include "controller.h"
+#include "ci.h"
 #include "sensor.h"
 #include "valve.h"
 
@@ -63,11 +64,7 @@ void controllerInit(void)
 
 
 void controllerSendMsg(CtrlMsgID_t id, uint16_t arg)
-{
-    /*
-    *  Current cmsis-rtos API can send only uint32 words
-    *  So we pack a message into word
-    */
+{   
     CtrlMsgQItem_t msgItem;
     msgItem.msg.id  = id;
     msgItem.msg.arg = arg;
@@ -106,6 +103,9 @@ static void controllerValvePrepare(void)
     }
 }
 
+/*
+*   Reading temperature sensor
+*/
 static void controllerGetTemp(void)
 {
     uint16_t rawTemp;
@@ -114,6 +114,7 @@ static void controllerGetTemp(void)
     if(res == SENSOR_STATUS_OK)
     {
         controllerSendMsg(_UPDATE_VALVE_, rawTemp);
+        ciSendMsg(_SEND_TEMP_, rawTemp);            // Send measured temperature via communication interface
     }
     else
     {
@@ -145,11 +146,11 @@ static int16_t tempCovertFromRaw(int16_t rawTemp)
 *   to the current temperature. In principle PID maybe used or other approaches.
 */
 static void controllerUpdateValve(uint16_t rawTemp)
-{    
-    // Relay control
+{        
     uint16_t newValveVal;
     int16_t curTemp = tempCovertFromRaw(rawTemp);
 
+    // Relay valve control
     if(curTemp > maxTemp)
         newValveVal = VALVE_CLOSE_VAL;
     else if(curTemp < minTemp)
