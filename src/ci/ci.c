@@ -79,7 +79,7 @@ void ciSendTemp(uint16_t temp)
     *   Here temp data should be encoded, data frame should be prepared
     *   Frame data should be sent to data link layer
     * 
-    *   dataLinkWriteData(frameData);
+    *   dataLinkWriteData(frameData, frameLen);
     */
 }
 
