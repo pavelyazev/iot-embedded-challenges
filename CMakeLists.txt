@@ -17,6 +17,7 @@ include_directories(src
                     src/platform
                     src/controller
                     src/ci
+                    src/datalink
                     src/sensor
                     src/valve
                     src/cmsis-rtos
@@ -28,6 +29,7 @@ file(GLOB sources src/*.c
                   src/platform/*.c
                   src/controller/*.c
                   src/ci/*.c
+                  src/datalink/*.c
                   src/sensor/*.c
                   src/valve/*.c
                   src/cmsis-rtos/*.c
