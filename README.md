@@ -1,3 +1,4 @@
+# Thermostat
 
 This project is presumed to build by the following toolchain 
 https://launchpad.net/gcc-arm-embedded/+announcement/15345
@@ -13,7 +14,7 @@ The target MCU is STM32F4XX.
 CMSIS-RTOS abstraction layer is used just to make code more visual.
 
 
-To build project:
+## Build
 
 Update stm32.cmake file with proper path to toolchain
 
@@ -22,6 +23,7 @@ cd build
 cmake -G "Unix Makefiles" ..
 make
 
+## Description
 The project is split into files in accordance with the functional purpose.
 The main logic is situated in the controller.c file.
 In intitialization part a task, a message queue and a timer are created.
