@@ -51,9 +51,7 @@ void ciInit(void)
 
 void ciSendMsg(CiMsgID_t id, uint16_t arg)
 {
-    CiMsgQItem_t msgItem;
-    msgItem.msg.id  = id;
-    msgItem.msg.arg = arg;
+    CiMsgQItem_t msgItem = {.msg.id = id, .msg.arg = arg};
 	osMessagePut(ciMsgQ, msgItem.info, 0);
 }
 

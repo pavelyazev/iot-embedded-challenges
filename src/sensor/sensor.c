@@ -3,6 +3,7 @@
 
 int32_t sensorInit(void)
 {
+    // Initialize, detect sensor presence here 
     return SENSOR_STATUS_OK;
 }
 

@@ -2,7 +2,8 @@
 #include "valve.h"
 
 int32_t valveInit(void)
-{
+{    
+    // Initialize valve HW related stuff here
     return VALVE_STATUS_OK;
 }
 

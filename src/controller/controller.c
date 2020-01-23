@@ -65,9 +65,7 @@ void controllerInit(void)
 
 void controllerSendMsg(CtrlMsgID_t id, uint16_t arg)
 {   
-    CtrlMsgQItem_t msgItem;
-    msgItem.msg.id  = id;
-    msgItem.msg.arg = arg;
+    CtrlMsgQItem_t msgItem = {.msg.id = id, .msg.arg = arg};   
 	osMessagePut(ctrlMsgQ, msgItem.info, 0);
 }
 
