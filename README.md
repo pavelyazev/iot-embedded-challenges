@@ -11,15 +11,26 @@ Finally only header files and the library for linking were added into project tr
 The target MCU is STM32F4XX.
 
 CMSIS-RTOS abstraction layer is used just to make code more visual.
-But it is not the best option because its API is limited.
-
 
 
 To build project:
 
-Update stm32.cmake file with proper path to toolchane
+Update stm32.cmake file with proper path to toolchain
 
 mkdir build
 cd build
 cmake -G "Unix Makefiles" ..
 make
+
+The project is split into files in accordance with the functional purpose.
+The main logic is situated in controller.c file.
+In intitialization part a task, a message queue and a timer are created.
+Event based approach is used. So when something happens in the system controller
+task gets notification via message queue.
+
+For example, timer sends periodic notifications to poll temperature sensor.
+When this polling is finished controller sens a notifications itself to perform
+regularion cycle.
+
+Currently inplemented relay regulation. The measured temperature is compared with
+Min/Max temperature boundaries and a decision is made to close or open a valve.
