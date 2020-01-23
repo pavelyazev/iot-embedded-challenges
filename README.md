@@ -16,12 +16,14 @@ CMSIS-RTOS abstraction layer is used just to make code more visual.
 
 ## Build
 
+```
 Update stm32.cmake file with proper path to toolchain
 
 mkdir build
 cd build
 cmake -G "Unix Makefiles" ..
 make
+```
 
 ## Description
 The project is split into files in accordance with the functional purpose.
