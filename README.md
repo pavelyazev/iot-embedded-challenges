@@ -47,6 +47,7 @@ notification the controll task about incomming command.
 The communication interface also performs sending messages from control part. 
 The communication interface is implemented as a task with a its own message queue. 
 
+A physical communication interface is presented by a data link abstraction. 
 
 
 
